@@ -13,4 +13,6 @@ public interface ToolFileRepository extends JpaRepository<ToolFileEntity, String
     boolean existsByNameAndExtensionAndParentNodeAndToolEntity(String name, String extension, ToolFileEntity parentNode, ToolEntity toolEntity);
 
     Optional<ToolFileEntity> findByNameAndExtensionAndParentNodeAndToolEntity(String name, String extension, ToolFileEntity parentNode, ToolEntity toolEntity);
+
+
 }

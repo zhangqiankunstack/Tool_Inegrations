@@ -24,6 +24,7 @@ public class ToolEntity implements Serializable {
     private String name;
     private String version;      //版本号
     private String type;        //工具类型
+    private boolean deleted = false;//是否删除
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "longtext",length = 0)
@@ -33,4 +34,7 @@ public class ToolEntity implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "longtext",length = 0)
     private String NewFeatures;                //新特性
+
+    @ManyToOne
+    private UserEntity userEntity;//工具所属
 }

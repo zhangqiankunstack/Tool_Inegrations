@@ -1,6 +1,5 @@
 package com.rengu.toolintegrations.Service;
 
-import com.rengu.toolintegrations.Entity.FileEntity;
 import com.rengu.toolintegrations.Entity.FileMetaEntity;
 import com.rengu.toolintegrations.Entity.ToolEntity;
 import com.rengu.toolintegrations.Entity.ToolFileEntity;
@@ -8,6 +7,8 @@ import com.rengu.toolintegrations.Repository.ToolFileRepository;
 import com.rengu.toolintegrations.Utils.ApplicationMessages;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -32,6 +33,13 @@ public class ToolFileService {
     public ToolFileService(ToolFileRepository toolFileRepository, FileService fileService) {
         this.toolFileRepository = toolFileRepository;
         this.fileService = fileService;
+    }
+
+    //根据工具名称或者文件名称组合查询
+    public List<ToolFileEntity> getToolFileFuzzQueryByToolNameOrByFileName(String toolName, String fileName, String userId, Pageable pageable){
+        Sort sort = Sort.by(Sort.Direction.DESC,"createTime");
+        //return toolFileRepository.findByNameBy;
+        return null;
     }
 
     // 根据组件父节点保存文件
@@ -112,7 +120,6 @@ public class ToolFileService {
             return false;
         }
         return toolFileRepository.existsById(toolFileId);
-
     }
 
     // 根据Id查询组件文件是否存在

@@ -53,10 +53,10 @@ public class ApplicationMessages {
     public static final String DEVICE_IS_DEPOLOYING = "该设备正在部署：";
     public static final String DEVICE_IS_OFFLINE = "该设备已离线：";
 
-    // 组件相关提示信息
+    // 工具相关提示信息
     public static final String COMPONENT_NAME_ARGS_NOT_FOUND = "组件名参数不存在或不合法";
     public static final String COMPONENT_NAME_NOT_FOUND = "未发现该组件名：";
-    public static final String COMPONENT_NAME_EXISTED = "该组件名已存在：";
+    public static final String TOOL_NAME_EXISTED = "该组件名已存在：";
     public static final String COMPONENT_VERSION_ARGS_NOT_FOUND = "组件版本参数不存在或不合法";
     public static final String COMPONENT_VERSION_NOT_FOUND = "未发现该组件版本：";
     public static final String COMPONENT_VERSION_EXISTED = "该组件版本已存在：";
@@ -64,7 +64,7 @@ public class ApplicationMessages {
     public static final String COMPONENT_RELATIVE_PATH_NOT_FOUND = "未发现该组件相对路径：";
     public static final String COMPONENT_RELATIVE_PATH_EXISTED = "该组件相对路径已存在：";
     public static final String COMPONENT_ID_ARGS_NOT_FOUND = "组件Id参数不存在或不合法";
-    public static final String COMPONENT_ID_NOT_FOUND = "未发现该组件Id：";
+    public static final String TOOL_ID_NOT_FOUND = "未发现该工具Id：";
     public static final String COMPONENT_ID_EXISTED = "该组件Id已存在：";
     public static final String COMPONENT_NAME_AND_VERSION_EXISTED = "该组件已存在：";
     public static final String COMPONENT_NOT_FOUND="没有此组件类别";
@@ -81,7 +81,7 @@ public class ApplicationMessages {
     public static final String FILE_ID_NOT_FOUND = "未发现该文件Id：";
     public static final String FILE_ID_EXISTED = "该文件Id已存在：";
 
-    // 组件文件相关提示信息
+    // 工具文件相关提示信息
     public static final String COMPONENT_FILE_NAME_ARGS_NOT_FOUND = "组件文件名参数不存在或不合法";
     public static final String COMPONENT_FILE_NAME_NOT_FOUND = "未发现该组件文件名：";
     public static final String COMPONENT_FILE_NAME_EXISTED = "该组件文件名已存在：";
