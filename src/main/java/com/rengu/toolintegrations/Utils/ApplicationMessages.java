@@ -70,6 +70,13 @@ public class ApplicationMessages {
     public static final String COMPONENT_NOT_FOUND="没有此组件类别";
     public static final String COMPONENT_VERSION_CONTAINS_LLLEGAL_TEXT="组件版本号中包含不合法文字";
 
+    //工具成果相关提示信息
+    public static final String TOOL_AVHIEVEMENTS_NAME_AND_TYPE_AND_VERSION_EXIST="工具成果名称已存在";
+    public static final String TOOL_AVHIEVEMENTS_NAME_NOT_NULL="工具成果名称不能为空";
+    public static final String TOOL_AVHIEVEMENTS_NAME_ID_NOT_FOUND="工具成果ID未找到";
+    public static final String TOOL_AVHIEVEMENTS_FILE_NAME_ID_NOT_FOUND="工具成果ID未找到";
+
+
     // 文件块相关提示信息
     public static final String FILE_CHUNK_ARGS_NOT_FOUND = "文件块不存在或不合法";
     public static final String FILE_CHUNK_NOT_FOUND = "未发现该文件块：";
