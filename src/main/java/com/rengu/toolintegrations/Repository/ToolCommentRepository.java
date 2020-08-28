@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ToolCommentRepository extends JpaRepository<ToolComment,String> {
+
     List<ToolComment> findByToolFileId(String toolFileId);
 }

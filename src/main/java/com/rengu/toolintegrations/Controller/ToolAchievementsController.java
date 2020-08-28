@@ -39,4 +39,7 @@ public class ToolAchievementsController {
     public ResultEntity saveComponentFilesByParentNodeAndComponent(@PathVariable(value = "toolAchievementsId") String toolAchievementsId, @RequestHeader(value = "parentNodeId", required = false, defaultValue = "") String parentNodeId, @RequestBody List<FileMetaEntity> fileMetaEntityList) {
         return ResultUtils.build(achievementsFileService.saveToolAchievementsFileByParentNodeAndTool(toolAchievementsService.getToolAchievementsById(toolAchievementsId), parentNodeId, fileMetaEntityList));
     }
+
+    //下载工具成果文件
+
 }

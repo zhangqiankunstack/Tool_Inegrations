@@ -3,9 +3,11 @@ package com.rengu.toolintegrations.Entity;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @ClassName ToolFileAndUser
@@ -17,6 +19,8 @@ import java.util.Set;
 @Entity
 @Data
 public class ToolFileAndUser implements Serializable {
+    @Id
+    private String id= UUID.randomUUID().toString();
     private String toolFileId;
     private String userId;
 

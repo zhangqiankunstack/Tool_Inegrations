@@ -84,13 +84,15 @@ public class ToolAchievementsFileService {
         return achievementsFileRepository.findById(toolAchievementsFileId).get();
     }
 
+    //下载工具成果文件
+
+
     // 根据Id查询工具成果文件是否存在
     public boolean hasToolAchievementsFileById(String toolAchievementsFileId) {
         if (StringUtils.isEmpty(toolAchievementsFileId)) {
             return false;
         }
         return achievementsFileRepository.existsById(toolAchievementsFileId);
-
     }
 
     public boolean hasToolAchievementsByNameAndExtensionAndParentNodeAndToolAchievements(String name, String extension, ToolAchievementsFile parentNode, ToolAchievements achievements) {

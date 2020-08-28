@@ -25,13 +25,12 @@ public class ToolFileAndUserService {
     }
 
     //用户下载工具，记录一条下载记录
-    public List<ToolFileAndUser> saveToolFileAndUser(String[] toolFileIds, String userId) {
-        List list = Arrays.asList(toolFileIds);
+    public List<ToolFileAndUser> saveToolFileAndUser(List<String>toolFileIds, String userId) {
         List<ToolFileAndUser> list1 = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (!hasExistByToolFileIdAndUserId(toolFileIds[i], userId)) {
+        for (int i = 0; i < toolFileIds.size(); i++) {
+            if (!hasExistByToolFileIdAndUserId(toolFileIds.get(i), userId)) {
                 ToolFileAndUser toolFileAndUser = new ToolFileAndUser();
-                toolFileAndUser.setToolFileId(toolFileIds[i]);
+                toolFileAndUser.setToolFileId(toolFileIds.get(i));
                 toolFileAndUser.setUserId(userId);
                 toolFileAndUserRepository.save(toolFileAndUser);
                 list1.add(toolFileAndUser);
