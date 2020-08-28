@@ -1,5 +1,6 @@
 package com.rengu.toolintegrations.Utils;
 
+import com.rengu.toolintegrations.Entity.ToolFileEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.util.StringUtils;
@@ -54,24 +55,26 @@ public class FormatUtils {
     }
 
 //
-//    // 递归拼接path信息
-//    public static String getComponentFileRelativePath(ComponentFileEntity componentFileEntity, String basePath) {
-//        if (basePath.isEmpty()) {
-//            if (componentFileEntity.isFolder()) {
-//                basePath = File.separatorChar + componentFileEntity.getName() + File.separatorChar;
-//            } else {
-//                basePath = StringUtils.isEmpty(componentFileEntity.getFileEntity().getType()) ? File.separatorChar + componentFileEntity.getName() : File.separatorChar + componentFileEntity.getName() + "." + componentFileEntity.getFileEntity().getType();
-//            }
-//        }
-//        while (componentFileEntity.getParentNode() != null) {
-//            componentFileEntity = componentFileEntity.getParentNode();
-//            basePath = File.separatorChar + componentFileEntity.getName() + basePath;
-//            getComponentFileRelativePath(componentFileEntity, basePath);
-//        }
-//        return FormatUtils.formatPath(basePath);
-//    }
-//
-//    // 递归拼接path信息
+    // 递归拼接path信息
+    public static String getToolFileRelativePath(ToolFileEntity toolFileEntity, String basePath) {
+        if (basePath.isEmpty()) {
+            if (toolFileEntity.isFolder()) {
+                basePath = File.separatorChar + toolFileEntity.getName() + File.separatorChar;
+                System.out.println("是文件夹的情况下获取了什么内容："+basePath);
+            } else {
+                basePath = StringUtils.isEmpty(toolFileEntity.getFileEntity().getType()) ? File.separatorChar + toolFileEntity.getName() : File.separatorChar + toolFileEntity.getName() + "." + toolFileEntity.getFileEntity().getType();
+                System.out.println("不是文件夹的情况下获取了什么路径："+basePath);
+            }
+        }
+        while (toolFileEntity.getParentNode() != null) {
+            toolFileEntity = toolFileEntity.getParentNode();
+            basePath = File.separatorChar + toolFileEntity.getName() + basePath;
+            getToolFileRelativePath(toolFileEntity, basePath);
+        }
+        return FormatUtils.formatPath(basePath);
+    }
+
+    // 递归拼接path信息
 //    public static String getComponentFileHistoryRelativePath(ComponentFileHistoryEntity componentFileHistoryEntity, String basePath) {
 //        if (basePath.isEmpty()) {
 //            if (componentFileHistoryEntity.isFolder()) {
