@@ -35,9 +35,9 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Operations Management Suite V3")
-                .description("Operations Management Suite V3 Project APIs")
-                .contact(new Contact("ChangMing Han", "https://github.com/MagnyCopper", "han.changming@qq.com"))
+                .title("Tool Integrations")
+                .description("Tool Integrations Project APIs")
+                .contact(new Contact("Zhangqiankun", "https://github.com/MagnyCopper", "qq.com"))
                 .version("0.0.1")
                 .build();
     }

@@ -5,8 +5,11 @@ import com.rengu.toolintegrations.Entity.UserEntity;
 import com.rengu.toolintegrations.Repository.ToolRepository;
 import com.rengu.toolintegrations.Utils.ApplicationMessages;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * Author: Zhangqiankun
@@ -28,11 +31,8 @@ public class ToolService {
         }
         //判断是否存在
         if(hasToolByNameAndVersionAndTpye(toolArge.getName(),toolArge.getVersion(),toolArge.getType())){
-            throw new RuntimeException(ApplicationMessages.COMPONENT_NAME_AND_VERSION_EXISTED + toolArge.getName() + "-" + toolArge.getVersion()+ "-" +toolArge.getType());
+            throw new RuntimeException(ApplicationMessages.TOOL_NAME_AND_VERSION_EXISTED + toolArge.getName() + "-" + toolArge.getVersion()+ "-" +toolArge.getType());
         }
-//        if (hasToolByNameAndVersionAndDeletedAndProject(componentEntity.getName(), componentEntity.getVersion(), false, projectEntity)) {
-//            throw new RuntimeException(ApplicationMessages.COMPONENT_NAME_AND_VERSION_EXISTED + componentEntity.getName() + "-" + componentEntity.getVersion());
-//        }
         //工具所有人员
         toolArge.setUserEntity(userEntity);
         return toolRepository.save(toolArge);
@@ -62,10 +62,16 @@ public class ToolService {
         return toolRepository.existsByNameAndVersionAndType(toolName,version,type);
     }
 
+    //根据用户以及是否删除查询工具
+    public List<ToolEntity> getToolAllByDeletedAndUser(boolean deleted, UserEntity userEntity, Pageable pageable){
+        return toolRepository.findByDeletedAndUserEntity(deleted,userEntity,pageable);
+    }
+
     //根据组件id删除组件
     public ToolEntity deleteToolById(String toolId) {
         ToolEntity toolEntity = getToolById(toolId);
         toolEntity.setDeleted(true);
         return toolEntity;
     }
+
 }

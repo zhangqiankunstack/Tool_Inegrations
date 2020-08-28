@@ -26,7 +26,7 @@ import java.util.Set;
 
 /**
  * 打包返回用户信息给security做用户校验使用（2）
- * @program: OperationsManagementSuiteV3
+ * @program: Tool_integrations
  * @author: hanchangming
  * @create: 2018-08-22 17:05
  **/
