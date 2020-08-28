@@ -25,13 +25,13 @@ public class ToolService {
     }
 
     //保存工具
-    public ToolEntity saveTool(UserEntity userEntity,ToolEntity toolArge){
+    public ToolEntity saveTool(UserEntity userEntity, ToolEntity toolArge) {
         if (StringUtils.isEmpty(toolArge.getName())) {
             throw new RuntimeException(ApplicationMessages.TOOL_NAME_EXISTED);
         }
         //判断是否存在
-        if(hasToolByNameAndVersionAndTpye(toolArge.getName(),toolArge.getVersion(),toolArge.getType())){
-            throw new RuntimeException(ApplicationMessages.TOOL_NAME_AND_VERSION_EXISTED + toolArge.getName() + "-" + toolArge.getVersion()+ "-" +toolArge.getType());
+        if (hasToolByNameAndVersionAndTpye(toolArge.getName(), toolArge.getVersion(), toolArge.getType())) {
+            throw new RuntimeException(ApplicationMessages.TOOL_NAME_AND_VERSION_EXISTED + toolArge.getName() + "-" + toolArge.getVersion() + "-" + toolArge.getType());
         }
         //工具所有人员
         toolArge.setUserEntity(userEntity);
@@ -39,32 +39,32 @@ public class ToolService {
     }
 
     //根据工具id查询工具
-    public ToolEntity getToolById(String toolId){
-        if(!hasToolById(toolId)){
+    public ToolEntity getToolById(String toolId) {
+        if (!hasToolById(toolId)) {
             throw new RuntimeException(ApplicationMessages.TOOL_ID_NOT_FOUND + toolId);
         }
         return toolRepository.findById(toolId).get();
     }
 
     //根据工具id判断工具是否存在
-    public boolean hasToolById(String toolId){
-        if(StringUtils.isEmpty(toolId)){
+    public boolean hasToolById(String toolId) {
+        if (StringUtils.isEmpty(toolId)) {
             return false;
         }
         return toolRepository.existsById(toolId);
     }
 
     //根据工具名，版本号，以及类型判断工具是否存在
-    public boolean hasToolByNameAndVersionAndTpye(String toolName,String version,String type){
-        if(!StringUtils.isEmpty(toolName) ||!StringUtils.isEmpty(version) ||!StringUtils.isEmpty(type)){
+    public boolean hasToolByNameAndVersionAndTpye(String toolName, String version, String type) {
+        if (!StringUtils.isEmpty(toolName) || !StringUtils.isEmpty(version) || !StringUtils.isEmpty(type)) {
             return false;
         }
-        return toolRepository.existsByNameAndVersionAndType(toolName,version,type);
+        return toolRepository.existsByNameAndVersionAndType(toolName, version, type);
     }
 
     //根据用户以及是否删除查询工具
-    public List<ToolEntity> getToolAllByDeletedAndUser(boolean deleted, UserEntity userEntity, Pageable pageable){
-        return toolRepository.findByDeletedAndUserEntity(deleted,userEntity,pageable);
+    public List<ToolEntity> getToolAllByDeletedAndUser(boolean deleted, UserEntity userEntity, Pageable pageable) {
+        return toolRepository.findByDeletedAndUserEntity(deleted, userEntity, pageable);
     }
 
     //根据组件id删除组件

@@ -48,8 +48,8 @@ public class ToolFileService {
     }
 
     //根据用户查询所有工具文件
-    public List<ToolFileEntity> getToolAllByUser(String userId, Pageable pageable){
-        return toolFileRepository.findByUserEntity(userId,pageable);
+    public List<ToolFileEntity> getToolAllByUser(String userId, Pageable pageable) {
+        return toolFileRepository.findByUserEntity(userId, pageable);
     }
 
     // 根据组件父节点保存文件
@@ -181,12 +181,12 @@ public class ToolFileService {
     }
 
     //根据工具id查询工具文件
-    public List<ToolFileEntity> getToolFilesByToolId(String toolId,Pageable pageable){
+    public List<ToolFileEntity> getToolFilesByToolId(String toolId, Pageable pageable) {
         boolean bool = toolService.hasToolById(toolId);
-        if(!bool==true){
-            throw new RuntimeException(ApplicationMessages.TOOL_ID_NOT_FOUND+toolId);
+        if (!bool == true) {
+            throw new RuntimeException(ApplicationMessages.TOOL_ID_NOT_FOUND + toolId);
         }
-        List<ToolFileEntity> toolFileEntityList = toolFileRepository.findByToolId(toolId,pageable);
+        List<ToolFileEntity> toolFileEntityList = toolFileRepository.findByToolId(toolId, pageable);
         return toolFileEntityList;
     }
 }
