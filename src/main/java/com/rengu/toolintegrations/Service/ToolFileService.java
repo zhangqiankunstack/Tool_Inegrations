@@ -93,6 +93,7 @@ public class ToolFileService {
         return toolFileEntityList;
         //return saveComponentFilesHistory(componentFileEntityList);
     }
+
     // 根据名称、父节点及组件检查文件是否存在
     public boolean hasToolFileByNameAndExtensionAndParentNodeAndTool(String name, String extension, ToolFileEntity parentNode, ToolEntity toolEntity) {
         if (StringUtils.isEmpty(name) || StringUtils.isEmpty(extension)) {
