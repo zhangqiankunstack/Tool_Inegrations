@@ -2,6 +2,7 @@ package com.rengu.toolintegrations.Service;
 
 import com.rengu.toolintegrations.Entity.ChunkEntity;
 import com.rengu.toolintegrations.Entity.FileEntity;
+import com.rengu.toolintegrations.Entity.ToolEntity;
 import com.rengu.toolintegrations.Repository.FileRepository;
 import com.rengu.toolintegrations.Utils.ApplicationConfig;
 import com.rengu.toolintegrations.Utils.ApplicationMessages;
@@ -22,9 +23,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 /**
- * @program: OperationsManagementSuiteV3
+ * @program: Tool_integrations
  * @author: hanchangming
  * @create: 2018-08-24 11:03
  **/
@@ -35,10 +37,12 @@ import java.io.IOException;
 public class FileService {
 
     private final FileRepository fileRepository;
+    private final ToolService toolService;
 
     @Autowired
-    public FileService(FileRepository fileRepository) {
+    public FileService(FileRepository fileRepository, ToolService toolService) {
         this.fileRepository = fileRepository;
+        this.toolService = toolService;
     }
 
     // 保存文件块
@@ -133,6 +137,8 @@ public class FileService {
         file.createNewFile();
         for (int i = 1; i <= chunkEntity.getTotalChunks(); i++) {
             File chunk = new File(ApplicationConfig.CHUNKS_SAVE_PATH + File.separator + chunkEntity.getIdentifier() + File.separator + i + ".tmp");
+            log.info("文件路径："+ApplicationConfig.CHUNKS_SAVE_PATH + File.separator + chunkEntity.getIdentifier() + File.separator + i + ".tmp");
+
             if (chunk.exists()) {
                 FileUtils.writeByteArrayToFile(file, FileUtils.readFileToByteArray(chunk), true);
             } else {
@@ -145,4 +151,5 @@ public class FileService {
         }
         return saveFile(file);
     }
+
 }
