@@ -3,8 +3,11 @@ package com.rengu.toolintegrations.Service;
 import com.rengu.toolintegrations.Entity.ToolComment;
 import com.rengu.toolintegrations.Entity.UserEntity;
 import com.rengu.toolintegrations.Repository.ToolCommentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.DoubleSummaryStatistics;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,11 +35,12 @@ public class ToolCommentService {
     }
 
     //查看当前工具下的评论
-    public List<ToolComment> findToolCommentByToolFileId(String toolFileId){
-        List<ToolComment> list=toolCommentRepository.findByToolFileId(toolFileId);
-        IntSummaryStatistics statistics=list.stream().mapToInt(x->x.getStarGrade()).summaryStatistics();
+    public Page<ToolComment> findToolCommentByToolFileId(String toolFileId, Pageable pageable){
+        Page<ToolComment> list=toolCommentRepository.findByToolFileId(toolFileId,pageable);
+        DoubleSummaryStatistics statistics=list.stream().mapToDouble(x->x.getStarGrade()).summaryStatistics();
         list.forEach(p->p.setAverage(statistics.getAverage()));
         return list;
     }
+
 
 }

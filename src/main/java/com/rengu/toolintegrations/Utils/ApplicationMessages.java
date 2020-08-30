@@ -47,9 +47,10 @@ public class ApplicationMessages {
 
     //工具成果相关提示信息
     public static final String TOOL_AVHIEVEMENTS_NAME_AND_TYPE_AND_VERSION_EXIST="工具成果名称已存在";
+    public static final String TOOL_AVHIEVEMENTS_ID_NOT_FOUND="工具成果ID未找到";
     public static final String TOOL_AVHIEVEMENTS_NAME_NOT_NULL="工具成果名称不能为空";
     public static final String TOOL_AVHIEVEMENTS_NAME_ID_NOT_FOUND="工具成果ID未找到";
-    public static final String TOOL_AVHIEVEMENTS_FILE_NAME_ID_NOT_FOUND="工具成果ID未找到";
+    public static final String TOOL_AVHIEVEMENTS_FILE_NAME_ID_NOT_FOUND="工具成果文件ID未找到";
 
 
     // 文件块相关提示信息

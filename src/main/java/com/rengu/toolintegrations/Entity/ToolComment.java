@@ -22,7 +22,7 @@ import java.util.UUID;
 public class ToolComment implements Serializable {
     @Id
     private String id= UUID.randomUUID().toString();
-    private int starGrade;  //评论星级
+    private double starGrade;  //评论星级
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "longtext",length = 0)

@@ -5,6 +5,7 @@ import com.rengu.toolintegrations.Entity.ToolAchievementsFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -12,4 +13,8 @@ public interface ToolAchievementsFileRepository extends JpaRepository<ToolAchiev
     boolean existsByNameAndExtensionAndParentNodeAndToolAchievements(String name, String extension, ToolAchievementsFile parentNode, ToolAchievements achievements);
 
     Optional<ToolAchievementsFile> findByNameAndExtensionAndParentNodeAndToolAchievements(String name, String extension, ToolAchievementsFile parentNode, ToolAchievements achievements);
+
+    List<ToolAchievementsFile> findByParentNodeAndToolAchievements(ToolAchievementsFile parentNode,ToolAchievements toolAchievements);
+
+    List<ToolAchievementsFile> findByToolAchievements(String ToolAchievementsId);
 }

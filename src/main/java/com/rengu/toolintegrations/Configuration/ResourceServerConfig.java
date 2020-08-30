@@ -52,6 +52,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         //暂时放行上传文件接口
         http.authorizeRequests().antMatchers("/files/**").permitAll();
         http.authorizeRequests().antMatchers("/tool/**").permitAll();
+        http.authorizeRequests().antMatchers("/users/**").permitAll();
+        http.authorizeRequests().antMatchers("/toolComment/**").permitAll();    //
+        http.authorizeRequests().antMatchers("/toolAchievements/**").permitAll();
+        http.authorizeRequests().antMatchers("/toolAchievements/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
     }
 }
