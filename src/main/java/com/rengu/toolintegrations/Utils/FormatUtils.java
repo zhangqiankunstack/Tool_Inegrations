@@ -1,5 +1,6 @@
 package com.rengu.toolintegrations.Utils;
 
+import com.rengu.toolintegrations.Entity.ToolAchievementsFile;
 import com.rengu.toolintegrations.Entity.ToolFileEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -70,6 +71,23 @@ public class FormatUtils {
             toolFileEntity = toolFileEntity.getParentNode();
             basePath = File.separatorChar + toolFileEntity.getName() + basePath;
             getToolFileRelativePath(toolFileEntity, basePath);
+        }
+        return FormatUtils.formatPath(basePath);
+    }
+
+    // 递归拼接path信息
+    public static String getComponentFileRelativePath(ToolAchievementsFile toolAchievementsFile, String basePath) {
+        if (basePath.isEmpty()) {
+            if (toolAchievementsFile.isFolder()) {
+                basePath = File.separatorChar + toolAchievementsFile.getName() + File.separatorChar;
+            } else {
+                basePath = StringUtils.isEmpty(toolAchievementsFile.getFileEntity().getType()) ? File.separatorChar + toolAchievementsFile.getName() : File.separatorChar + toolAchievementsFile.getName() + "." + toolAchievementsFile.getFileEntity().getType();
+            }
+        }
+        while (toolAchievementsFile.getParentNode() != null) {
+            toolAchievementsFile = toolAchievementsFile.getParentNode();
+            basePath = File.separatorChar + toolAchievementsFile.getName() + basePath;
+            getComponentFileRelativePath(toolAchievementsFile, basePath);
         }
         return FormatUtils.formatPath(basePath);
     }

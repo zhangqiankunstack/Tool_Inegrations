@@ -161,7 +161,7 @@ public class UserService implements UserDetailsService {
     }
 
     // 根据用户Id查询用户
-    @Cacheable(value = "User_Cache", key = "#userId")
+    //@Cacheable(value = "User_Cache", key = "#userId")
     public UserEntity getUserById(String userId) {
         if (!hasUserById(userId)) {
             throw new RuntimeException(ApplicationMessages.USER_ID_NOT_FOUND + userId);

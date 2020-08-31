@@ -8,7 +8,6 @@ import com.rengu.toolintegrations.Utils.ResultUtils;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +46,13 @@ public class ToolController {
     @DeleteMapping(value = "toolId}/deleteTool")
     public ResultEntity deleteToolById(@PathVariable(value = "toolId") String toolId){
         return ResultUtils.build(toolService.deleteToolById(toolId));
+    }
+
+    //根据工具id修改工具
+    @ApiOperation("根据工具id修改工具")
+    @PatchMapping(value = "/{toolId}")
+    public ResultEntity updateToolById(@PathVariable(value = "toolId")String toolId,ToolEntity toolAgrs){
+        return ResultUtils.build(toolService.updateToolById(toolId,toolAgrs));
     }
 
     // 根据id和父节点Id创建文件

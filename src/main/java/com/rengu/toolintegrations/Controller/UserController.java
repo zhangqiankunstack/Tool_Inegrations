@@ -16,7 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @program: OperationsManagementSuiteV3
+ * @program:
  * @author: hanchangming
  * @create: 2018-08-22 17:13
  **/
@@ -116,14 +116,14 @@ public class UserController {
 
     @ApiOperation("根据工具类型和文件名称组合模糊查询")
     @GetMapping(value = "/{userId}/fuzzyQuery")
-    public ResultEntity getToolFileFuzzQueryById(String toolName ,String fileName,@PathVariable(value = "userId") String userId, Pageable pageable) {
-        return ResultUtils.build(toolFileService.getToolFileFuzzQueryByToolNameOrByFileName(toolName,fileName,userId,pageable));
+    public ResultEntity getToolFileFuzzQueryById(String toolTpye ,String fileName,@PathVariable(value = "userId") String userId, Pageable pageable) {
+        return ResultUtils.build(toolFileService.getToolFileFuzzQueryByToolTypeOrByFileName(toolTpye,fileName,userId,pageable));
     }
 
     //通过用户id查询所有的文件
-    @ApiOperation("通过id查询该用户下所有的工具文件")
+    @ApiOperation("通过id查询该用户所上传的工具文件")
     @GetMapping(value = "/{userId}/findAllToolFiles")
-    public ResultEntity findAllToolFilesByUserId(@PathVariable(value = "userId")String userId,Pageable pageable){
-        return ResultUtils.build(toolFileService.getToolAllByUser(userId,pageable));
+    public ResultEntity findAllToolFilesByUserId(@PathVariable(value = "userId")String userId){
+        return ResultUtils.build(toolFileService.getToolAllByUser(userId));
     }
 }

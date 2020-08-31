@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ToolRepository extends JpaRepository<ToolEntity,String> {
     //通过工具名，版本号，类型判断工具是否存在
-    boolean existsByNameAndVersionAndType(String toolName, String version, String type);
+    boolean existsByNameAndVersionAndTypeAndDeletedAndUserEntity(String toolName, String version, String type,boolean deleted, UserEntity userEntity);
 
     //根据用户和是否删除查询工具
     List<ToolEntity> findByDeletedAndUserEntity(boolean deleted, UserEntity userEntity, Pageable pageable);
