@@ -23,7 +23,7 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequestMapping(value = "/files")
-@Api(tags={"上传文件"})
+@Api(tags = {"上传文件"})
 public class FileController {
 
     private final FileService fileService;

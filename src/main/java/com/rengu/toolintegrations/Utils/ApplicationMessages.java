@@ -1,9 +1,9 @@
 package com.rengu.toolintegrations.Utils;
 
 /**
- * @program: OperationsManagementSuiteV3
- * @author: hanchangming
- * @create: 2018-08-22 17:04
+ * @program: Tool_Inegrations
+ * @author: Zhagnqiankun
+ * @create: 2020-09-24 17:04
  **/
 
 
@@ -31,26 +31,21 @@ public class ApplicationMessages {
 
     // 需求相关提示信息
     public static final String DEMAND_ID_ARGS_NOT_FOUND = "需求Id或参数不存在或不合法";
-    public static final String WORKFLOW_NAME_NOT_NULL = "工作流名称不可为空";
-    public static final String WORKFLOW_TYPE_NOT_NULL_OR_ARGS_NOT_FOUND = "工作流类型不可为空或不合法";
-
-
 
     // 工具相关提示信息
-
     public static final String TOOL_NAME_EXISTED = "该组件名已存在：";
-    public static final String COMPONENT_VERSION_ARGS_NOT_FOUND = "组件版本参数不存在或不合法";
-
     public static final String TOOL_ID_NOT_FOUND = "未发现该工具Id：";
     public static final String TOOL_NAME_AND_VERSION_EXISTED = "该工具已存在：";
+    public static final String The_TOOL_HAS_BEEN_BOUND = "该工具已被绑定：";
 
 
-    //工具成果相关提示信息
-    public static final String TOOL_AVHIEVEMENTS_NAME_AND_TYPE_AND_VERSION_EXIST="工具成果名称已存在";
-    public static final String TOOL_AVHIEVEMENTS_ID_NOT_FOUND="工具成果ID未找到";
-    public static final String TOOL_AVHIEVEMENTS_NAME_NOT_NULL="工具成果名称不能为空";
-    public static final String TOOL_AVHIEVEMENTS_NAME_ID_NOT_FOUND="工具成果ID未找到";
-    public static final String TOOL_AVHIEVEMENTS_FILE_NAME_ID_NOT_FOUND="工具成果文件ID未找到";
+    //工具环境相关提示信息
+    public static final String TOOL_AVHIEVEMENTS_NAME_AND_TYPE_AND_VERSION_EXIST = "工具成果名称已存在";
+    public static final String TOOL_ENVIRONMENT_ID_NOT_FOUND = "工具成果ID未找到";
+    public static final String TOOL_AVHIEVEMENTS_NAME_NOT_NULL = "工具成果名称不能为空";
+    public static final String TOOL_AVHIEVEMENTS_NAME_ID_NOT_FOUND = "工具成果ID未找到";
+    public static final String TOOL_ENVIRONMENT_FILE_NAME_ID_NOT_FOUND = "工具成果文件ID未找到";
+    public static final String The_TOOL_CONSEQUENCE_HAS_BEEN_BOUND = "该工具成果已被绑定：";
 
 
     // 文件块相关提示信息
@@ -66,6 +61,26 @@ public class ApplicationMessages {
     // 工具文件相关提示信息
     public static final String TOOL_FILE_ID_NOT_FOUND = "未发现该工具文件Id：";
 
+    //工作流工具成果消息提示
+    public static final String WORKFLOW_NAME_NOT_NULL = "工作流名称不可为空";
+    public static final String WORKFLOW_TYPE_NOT_NULL_OR_ARGS_NOT_FOUND = "工作流类型不可为空或不合法";
+    public static final String TOOL_CONSEQUENCE_ID_NOT_FOUND = "未发现该工具成果Id：";
+    public static final String TOOL_CONSEQUENCE_NAME_NOT_NULL = "工具成果名称不能为空：";
+    public static final String TOOL_CONSEQUENCE_TYPE_NOT_NULL = "请选择工具成果类型：";
+
+    //工作流工具成果文件消息提示
+    public static final String TOOL_CONSEQUENCE_FILE_ID_NOT_FOUND = "未发现该工具成果文件Id：";
+
+    //工作流节点消息提示
+    public static final String TOOL_WORK_FLOW_NODE_ID_NOT_FOUND = "未发现该工具工作流节点Id：";
+    public static final String TOOL_WORK_FLOW_NODE_NAME_NOT_NULL = "该工具工作流节点名称不能为空：";
+    public static final String The_TOOL_WORK_FLOW_HAS_BEEN_BOUND = "该工具工作流节点已被绑定：";
+
+    //绘图逻辑消息提醒
+    public static final String TOOL_DRAWING_NODE_ID_NOT_FOUND = "未发现该绘图逻辑节点id";
+
+    //画布消息提醒
+    public static final String WORK_FLOW_CANVAS_ID_NOT_FOUND = "未发现该画布id";
 
     //操作日志提示消息
     public static final String USERACTIONLOG_ID_NOT_FOUND = "未发现该操作日志ID：";

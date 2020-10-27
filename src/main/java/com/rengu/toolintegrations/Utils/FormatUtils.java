@@ -1,6 +1,7 @@
 package com.rengu.toolintegrations.Utils;
 
-import com.rengu.toolintegrations.Entity.ToolAchievementsFile;
+import com.rengu.toolintegrations.Entity.ToolConsequenceFileEntity;
+import com.rengu.toolintegrations.Entity.ToolEnvironmentFileEntity;
 import com.rengu.toolintegrations.Entity.ToolFileEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -76,18 +77,35 @@ public class FormatUtils {
     }
 
     // 递归拼接path信息
-    public static String getComponentFileRelativePath(ToolAchievementsFile toolAchievementsFile, String basePath) {
+    public static String getEnvironmentFileRelativePath(ToolEnvironmentFileEntity toolEnvironmentFileEntity, String basePath) {
         if (basePath.isEmpty()) {
-            if (toolAchievementsFile.isFolder()) {
-                basePath = File.separatorChar + toolAchievementsFile.getName() + File.separatorChar;
+            if (toolEnvironmentFileEntity.isFolder()) {
+                basePath = File.separatorChar + toolEnvironmentFileEntity.getName() + File.separatorChar;
             } else {
-                basePath = StringUtils.isEmpty(toolAchievementsFile.getFileEntity().getType()) ? File.separatorChar + toolAchievementsFile.getName() : File.separatorChar + toolAchievementsFile.getName() + "." + toolAchievementsFile.getFileEntity().getType();
+                basePath = StringUtils.isEmpty(toolEnvironmentFileEntity.getFileEntity().getType()) ? File.separatorChar + toolEnvironmentFileEntity.getName() : File.separatorChar + toolEnvironmentFileEntity.getName() + "." + toolEnvironmentFileEntity.getFileEntity().getType();
             }
         }
-        while (toolAchievementsFile.getParentNode() != null) {
-            toolAchievementsFile = toolAchievementsFile.getParentNode();
-            basePath = File.separatorChar + toolAchievementsFile.getName() + basePath;
-            getComponentFileRelativePath(toolAchievementsFile, basePath);
+        while (toolEnvironmentFileEntity.getParentNode() != null) {
+            toolEnvironmentFileEntity = toolEnvironmentFileEntity.getParentNode();
+            basePath = File.separatorChar + toolEnvironmentFileEntity.getName() + basePath;
+            getEnvironmentFileRelativePath(toolEnvironmentFileEntity, basePath);
+        }
+        return FormatUtils.formatPath(basePath);
+    }
+
+    // 递归拼接path信息
+    public static String getConsequenceFileRelativePath(ToolConsequenceFileEntity toolConsequenceFileEntity, String basePath) {
+        if (basePath.isEmpty()) {
+            if (toolConsequenceFileEntity.isFolder()) {
+                basePath = File.separatorChar + toolConsequenceFileEntity.getName() + File.separatorChar;
+            } else {
+                basePath = StringUtils.isEmpty(toolConsequenceFileEntity.getFileEntity().getType()) ? File.separatorChar + toolConsequenceFileEntity.getName() : File.separatorChar + toolConsequenceFileEntity.getName() + "." + toolConsequenceFileEntity.getFileEntity().getType();
+            }
+        }
+        while (toolConsequenceFileEntity.getParentNode() != null) {
+            toolConsequenceFileEntity = toolConsequenceFileEntity.getParentNode();
+            basePath = File.separatorChar + toolConsequenceFileEntity.getName() + basePath;
+            getConsequenceFileRelativePath(toolConsequenceFileEntity, basePath);
         }
         return FormatUtils.formatPath(basePath);
     }

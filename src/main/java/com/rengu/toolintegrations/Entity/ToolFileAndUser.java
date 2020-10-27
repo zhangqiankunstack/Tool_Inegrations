@@ -21,7 +21,7 @@ import java.util.UUID;
 public class ToolFileAndUser implements Serializable {
     @Id
     private String id= UUID.randomUUID().toString();
-    private String toolFileId;
+    private String toolId;
     private String userId;
 
 }

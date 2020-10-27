@@ -6,9 +6,13 @@ import com.rengu.toolintegrations.Repository.ToolRepository;
 import com.rengu.toolintegrations.Utils.ApplicationMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,10 +22,18 @@ import java.util.List;
 @Service
 public class ToolService {
     private final ToolRepository toolRepository;
+    private final ToolFileService toolFileService;
+    private final ToolEnvironmentFileService toolEnvironmentFileService;
+    private final ToolDrawingNodeService toolDrawingNodeService;
+    private final ToolCommentService toolCommentService;
 
     @Autowired
-    public ToolService(ToolRepository toolRepository) {
+    public ToolService(ToolRepository toolRepository, ToolFileService toolFileService, ToolEnvironmentFileService toolEnvironmentFileService, ToolDrawingNodeService toolDrawingNodeService, ToolCommentService toolCommentService) {
         this.toolRepository = toolRepository;
+        this.toolFileService = toolFileService;
+        this.toolEnvironmentFileService = toolEnvironmentFileService;
+        this.toolDrawingNodeService = toolDrawingNodeService;
+        this.toolCommentService = toolCommentService;
     }
 
     //保存工具
@@ -33,12 +45,11 @@ public class ToolService {
         if (hasToolByNameAndVersionAndTpyeAndUserEntity(toolArge.getName(), toolArge.getVersion(), toolArge.getType(), false, userEntity)) {
             throw new RuntimeException(ApplicationMessages.TOOL_NAME_AND_VERSION_EXISTED + toolArge.getName() + "-" + toolArge.getVersion() + "-" + toolArge.getType());
         }
-        //工具所有人员
+        //工具所属人员
         toolArge.setUserEntity(userEntity);
         return toolRepository.save(toolArge);
     }
 
-    //根据工具id修改工具
     public ToolEntity updateToolById(String toolId, ToolEntity toolAgrs) {
         ToolEntity toolEntity = getToolById(toolId);
         if (!StringUtils.isEmpty(toolAgrs.getName())) {
@@ -58,11 +69,41 @@ public class ToolService {
         return toolRepository.save(toolEntity);
     }
 
+    //根据id清除工具
+    public ToolEntity cleanToolById(String toolId) throws IOException {
+        ToolEntity toolEntity = getToolById(toolId);
+        //TODO:删除工具文件
+        toolFileService.cleanToolFileByToolEntity(toolEntity);
+        //TODO：删除工具环境类
+        toolEnvironmentFileService.cleanToolConsequenceFileByToolEntity(toolEntity);
+        //TODO：删除绘图节点
+        toolDrawingNodeService.cleanToolWorkFlowNodeByToolEntity(toolEntity);
+        //TODO：删除评论
+        toolCommentService.cleanToolComentByToolEntity(toolEntity);
+        //TODO:删除用户下载次数表信息
+        toolRepository.delete(toolEntity);
+        return toolEntity;
+    }
+
     public ToolEntity getToolById(String toolId) {
         if (!hasToolById(toolId)) {
             throw new RuntimeException(ApplicationMessages.TOOL_ID_NOT_FOUND + toolId);
         }
         return toolRepository.findById(toolId).get();
+    }
+
+    public ToolEntity getToolByIds(String toolId) {
+        return toolRepository.findById(toolId).orElse(null);
+    }
+
+    //根据工具类型或者名称组合模糊查询
+    public List<ToolEntity> getToolFuzzQueryByToolTypeOrByToolName(String toolTpye, String toolName,boolean deleted, Pageable pageable) {
+        return toolRepository.findBytoolTypeAndByNameAndByDeleted(toolTpye, toolName,deleted,pageable);
+    }
+
+    //根据用户id，名称，删除类型，模糊查询
+    public List<ToolEntity> getToolFuzzQueryByUserIdAndToolNameAndDeleted( String toolName,boolean deleted,String userId, Pageable pageable) {
+        return toolRepository.findAllBytoolTypeAndByNameAndByDeleted(toolName,deleted,userId,pageable);
     }
 
     public boolean hasToolById(String toolId) {
@@ -85,10 +126,43 @@ public class ToolService {
         return toolRepository.findByDeletedAndUserEntity(deleted, userEntity, pageable);
     }
 
+    //删除工具
     public ToolEntity deleteToolById(String toolId) {
         ToolEntity toolEntity = getToolById(toolId);
         toolEntity.setDeleted(true);
-        return toolEntity;
+//        Date deletedTime = new Date();
+//        toolEntity.setDetetedTime(deletedTime);
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String deletedTime = format.format(date);
+        toolEntity.setDetetedTime(deletedTime);
+        return toolRepository.save(toolEntity);
     }
 
+    //恢复工具
+    public ToolEntity restoreToolById(String toolId) {
+        ToolEntity toolEntity = getToolById(toolId);
+        toolEntity.setDeleted(false);
+        return toolRepository.save(toolEntity);
+    }
+
+    //查询所有工具
+    public List<ToolEntity> getToolAll(boolean deleted) {
+        Sort sort = Sort.by(Sort.Direction.DESC,"createTime");
+        return toolRepository.findAllByDeleted(deleted,sort);
+    }
+
+    //根据工具名模糊查询（管理员）
+    public List<ToolEntity> fuzzyToolByToolName(String toolName) {
+        return toolRepository.findAllByToolName(toolName);
+    }
+
+
+    public List<ToolEntity> cleanToolByUserEntity(UserEntity userEntity) throws IOException{
+        List<ToolEntity> toolEntityList = toolRepository.getToolByUserEntity(userEntity);
+        for(ToolEntity toolEntity:toolEntityList){
+            cleanToolById(toolEntity.getId());
+        }
+        return toolEntityList;
+    }
 }
