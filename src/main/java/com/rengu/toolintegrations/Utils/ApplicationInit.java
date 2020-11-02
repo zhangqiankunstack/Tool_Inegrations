@@ -82,6 +82,7 @@ public class ApplicationInit implements ApplicationRunner {
             UserEntity userEntity = new UserEntity();
             userEntity.setUsername(ApplicationConfig.DEFAULT_ADMIN_USERNAME);
             userEntity.setPassword(ApplicationConfig.DEFAULT_ADMIN_PASSWORD);
+            userEntity.setDownloadRights("1,2,3,4");
             userService.saveAdminUser(userEntity);
             log.info("OMS服务器-初始化系统默认用户：" + userEntity.getUsername());
         }

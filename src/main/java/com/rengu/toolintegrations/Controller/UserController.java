@@ -54,7 +54,7 @@ public class UserController {
     // 保存普通用户
     @ApiOperation("保存普通用户")
     @PostMapping(value = "/user")
-    @PreAuthorize(value = "hasRole('admin')")
+//    @PreAuthorize(value = "hasRole('admin')")
     public ResultEntity saveDefaultUser(@RequestBody UserEntity userEntity) {
         return ResultUtils.build(userService.saveDefaultUser(userEntity));
     }
@@ -194,12 +194,13 @@ public class UserController {
         return ResultUtils.build(toolService.getToolFuzzQueryByToolTypeOrByToolName(toolTpye, toolName, deleted, pageable));
     }
 
+    //todo 查询工具数量，暂时不用
     //通过用户id查询所有的文件
-    @ApiOperation("通过id查询该用户所上传的工具文件")
-    @GetMapping(value = "/{userId}/findAllToolFiles")
-    public ResultEntity findAllToolFilesByUserId(@PathVariable(value = "userId") String userId) {
-        return ResultUtils.build(toolFileService.getToolAllByUser(userId));
-    }
+//    @ApiOperation("通过id查询该用户所上传的工具文件")
+//    @GetMapping(value = "/{userId}/findAllToolFiles")
+//    public ResultEntity findAllToolFilesByUserId(@PathVariable(value = "userId") String userId) {
+//        return ResultUtils.build(toolFileService.getToolAllByUser(userId));
+//    }
 
     //通过id查询该用户所上传的环境文件
     @ApiOperation("通过id查询该用户所上传的环境文件")
@@ -207,6 +208,7 @@ public class UserController {
     public ResultEntity findAllToolEnvironmentFilesByUserId(@PathVariable(value = "userId") String userId) {
         return ResultUtils.build(toolEnvironmentFileService.getToolEnvironmentFileAllByUser(userId));
     }
+
     //TODO：路径两个参数，不合理。 张乾坤 2020.10.12
     //通过用户id查询所有的绘图节点
     @ApiOperation("通过用户id以及是否删除查询所有的绘图")
@@ -228,5 +230,13 @@ public class UserController {
     public ResultEntity findAllToolConsequenceFilesByUserId(@PathVariable(value = "userId") String userId) {
         UserEntity userEntity = userService.getUserById(userId);
         return ResultUtils.build(toolConsequenceService.getToolConsequenceByUserEntity(userEntity));
+    }
+
+    //管理员分配不同用户对不同工具的下载权限
+    @ApiOperation("管理员分配不同用户对不同工具的下载权限")
+    @PatchMapping(value = "/updateUserLimitByUserId/{userId}/{downloadRights}")
+    @PreAuthorize(value = "hasRole('admin')")
+    public ResultEntity updateUserLimitByUserId(@PathVariable(value = "userId") String userId, @PathVariable(value = "downloadRights") String downloadRights) {
+        return ResultUtils.build(userService.updateUserLimitByUserId(userId, downloadRights));
     }
 }

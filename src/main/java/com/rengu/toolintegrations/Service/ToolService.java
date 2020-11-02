@@ -47,7 +47,10 @@ public class ToolService {
         }
         //工具所属人员
         toolArge.setUserEntity(userEntity);
-        return toolRepository.save(toolArge);
+        String parentNodeId=null;
+        toolRepository.save(toolArge);
+        toolFileService.saveToolFileByTool(toolArge,parentNodeId);
+        return toolArge;
     }
 
     public ToolEntity updateToolById(String toolId, ToolEntity toolAgrs) {
@@ -164,5 +167,15 @@ public class ToolService {
             cleanToolById(toolEntity.getId());
         }
         return toolEntityList;
+    }
+
+    //通过用户id查询工具数量
+    public Integer findToolCount(String userId){
+      return  toolRepository.countByUserEntity_Id(userId);
+    }
+
+    //工具管理，下拉框选择
+    public List<String> findToolByType(){
+        return toolRepository.findDistinctByType();
     }
 }

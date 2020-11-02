@@ -6,6 +6,7 @@ import com.rengu.toolintegrations.Repository.UserRepository;
 import com.rengu.toolintegrations.Utils.ApplicationConfig;
 import com.rengu.toolintegrations.Utils.ApplicationMessages;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -171,8 +172,8 @@ public class UserService implements UserDetailsService {
     }
 
     //根据用户名模糊查询
-    public List<UserEntity> fuzzyFindUserByName(String userName,boolean ifDeleted) {
-        return userRepository.findAllByUserNameAndIfDeleted(userName,ifDeleted);
+    public List<UserEntity> fuzzyFindUserByName(String userName, boolean ifDeleted) {
+        return userRepository.findAllByUserNameAndIfDeleted(userName, ifDeleted);
     }
 
     // 根据Id升级用户
@@ -227,7 +228,6 @@ public class UserService implements UserDetailsService {
     }
 
     // 根据用户Id查询用户
-    //@Cacheable(value = "User_Cache", key = "#userId")
     public UserEntity getUserById(String userId) {
         if (!hasUserById(userId)) {
             throw new RuntimeException(ApplicationMessages.USER_ID_NOT_FOUND + userId);
@@ -236,14 +236,21 @@ public class UserService implements UserDetailsService {
     }
 
     // 查询所有用户
-    public Page<UserEntity> getUsers(boolean ifDeleted,Pageable pageable) {
-        return userRepository.findAllByIfDeleted(ifDeleted,pageable);
+    public Page<UserEntity> getUsers(boolean ifDeleted, Pageable pageable) {
+        return userRepository.findAllByIfDeleted(ifDeleted, pageable);
     }
 
     public UserEntity deleteUserEntity(UserEntity userEntity) {
         userEntity.getAuthorities().remove(userEntity);
-         userRepository.delete(userEntity);
-         return userEntity;
+        userRepository.delete(userEntity);
+        return userEntity;
+    }
+
+    //管理员分配不同用户对不同工具的下载权限
+    public UserEntity updateUserLimitByUserId(String userId, String downloadRights) {
+        UserEntity userEntity = getUserById(userId);
+        userEntity.setDownloadRights(downloadRights);
+        return userRepository.save(userEntity);
     }
 }
 

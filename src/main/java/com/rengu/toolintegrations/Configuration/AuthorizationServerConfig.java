@@ -112,6 +112,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             Map<String, Object> additionalInfo = new HashMap<>();
             // 注意添加的额外信息，最好不要和已有的json对象中的key重名，容易出现错误
             additionalInfo.put("userId", loginUser.getId());
+            additionalInfo.put("downloadRights",loginUser.getDownloadRights());
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
             return accessToken;
         }
