@@ -21,18 +21,19 @@ import java.util.UUID;
 @Data
 public class ToolComment implements Serializable {
     @Id
-    private String id= UUID.randomUUID().toString();
-    private int starGrade;  //评论星级
+    private String id = UUID.randomUUID().toString();
+    private double starGrade;  //评论星级
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "longtext",length = 0)
+    @Column(columnDefinition = "longtext", length = 0)
     private String description;  //评论
-    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime = new Date();
     private double average;  //平均分
     private String toolFileId;  //下载工具文件id
     @ManyToOne
     private UserEntity userEntity;
 
-
+    @ManyToOne
+    private ToolEntity toolEntity;
 }

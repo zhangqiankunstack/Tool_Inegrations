@@ -29,16 +29,20 @@ public class UserEntity implements UserDetails, Serializable {
     private Date createTime = new Date();
     private String username;
     private String password;
+    private String realName;                       // 姓名
+    private String downloadRights;                 //工具下载权限
     private boolean accountNonExpired = true;       //是否过期
     private boolean accountNonLocked = true;        //不被锁
     private boolean credentialsNonExpired = true;   //授权是否过期
     private boolean enabled = true;                 //是否可用
+    private boolean ifDeleted = false;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<RoleEntity> roleEntities;
 
 
     /**
      * 手动添加用户权限
+     *
      * @return
      */
     @Override

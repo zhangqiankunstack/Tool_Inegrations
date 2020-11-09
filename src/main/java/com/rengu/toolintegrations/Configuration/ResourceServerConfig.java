@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 /**
  * 资源服务器类
+ *
  * @program: OperationsManagementSuiteV3
  * @author: hanchangming
  * @create: 2018-08-22 17:19
@@ -52,6 +53,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         //暂时放行上传文件接口
         http.authorizeRequests().antMatchers("/files/**").permitAll();
         http.authorizeRequests().antMatchers("/tool/**").permitAll();
+        http.authorizeRequests().antMatchers("/users/**").permitAll();
+        http.authorizeRequests().antMatchers("/toolComment/**").permitAll();
+        http.authorizeRequests().antMatchers("/toolAchievements/**").permitAll();
+        http.authorizeRequests().antMatchers("/toolAchievements/**").permitAll();
+        http.authorizeRequests().antMatchers("/toolFile/**").permitAll();
+        http.authorizeRequests().antMatchers("/workFlowCanvas/**").permitAll();
+        http.authorizeRequests().antMatchers("/toolConsequence/**").permitAll();
+        http.authorizeRequests().antMatchers("/toolDrawingNode/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
     }
 }

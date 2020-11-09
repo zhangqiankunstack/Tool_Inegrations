@@ -4,6 +4,7 @@ import com.rengu.toolintegrations.Entity.ChunkEntity;
 import com.rengu.toolintegrations.Entity.ResultEntity;
 import com.rengu.toolintegrations.Service.FileService;
 import com.rengu.toolintegrations.Utils.ResultUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequestMapping(value = "/files")
+@Api(tags = {"上传文件"})
 public class FileController {
 
     private final FileService fileService;

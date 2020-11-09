@@ -1,5 +1,7 @@
 package com.rengu.toolintegrations.Utils;
 
+import com.rengu.toolintegrations.Entity.ToolConsequenceFileEntity;
+import com.rengu.toolintegrations.Entity.ToolEnvironmentFileEntity;
 import com.rengu.toolintegrations.Entity.ToolFileEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -70,6 +72,40 @@ public class FormatUtils {
             toolFileEntity = toolFileEntity.getParentNode();
             basePath = File.separatorChar + toolFileEntity.getName() + basePath;
             getToolFileRelativePath(toolFileEntity, basePath);
+        }
+        return FormatUtils.formatPath(basePath);
+    }
+
+    // 递归拼接path信息
+    public static String getEnvironmentFileRelativePath(ToolEnvironmentFileEntity toolEnvironmentFileEntity, String basePath) {
+        if (basePath.isEmpty()) {
+            if (toolEnvironmentFileEntity.isFolder()) {
+                basePath = File.separatorChar + toolEnvironmentFileEntity.getName() + File.separatorChar;
+            } else {
+                basePath = StringUtils.isEmpty(toolEnvironmentFileEntity.getFileEntity().getType()) ? File.separatorChar + toolEnvironmentFileEntity.getName() : File.separatorChar + toolEnvironmentFileEntity.getName() + "." + toolEnvironmentFileEntity.getFileEntity().getType();
+            }
+        }
+        while (toolEnvironmentFileEntity.getParentNode() != null) {
+            toolEnvironmentFileEntity = toolEnvironmentFileEntity.getParentNode();
+            basePath = File.separatorChar + toolEnvironmentFileEntity.getName() + basePath;
+            getEnvironmentFileRelativePath(toolEnvironmentFileEntity, basePath);
+        }
+        return FormatUtils.formatPath(basePath);
+    }
+
+    // 递归拼接path信息
+    public static String getConsequenceFileRelativePath(ToolConsequenceFileEntity toolConsequenceFileEntity, String basePath) {
+        if (basePath.isEmpty()) {
+            if (toolConsequenceFileEntity.isFolder()) {
+                basePath = File.separatorChar + toolConsequenceFileEntity.getName() + File.separatorChar;
+            } else {
+                basePath = StringUtils.isEmpty(toolConsequenceFileEntity.getFileEntity().getType()) ? File.separatorChar + toolConsequenceFileEntity.getName() : File.separatorChar + toolConsequenceFileEntity.getName() + "." + toolConsequenceFileEntity.getFileEntity().getType();
+            }
+        }
+        while (toolConsequenceFileEntity.getParentNode() != null) {
+            toolConsequenceFileEntity = toolConsequenceFileEntity.getParentNode();
+            basePath = File.separatorChar + toolConsequenceFileEntity.getName() + basePath;
+            getConsequenceFileRelativePath(toolConsequenceFileEntity, basePath);
         }
         return FormatUtils.formatPath(basePath);
     }

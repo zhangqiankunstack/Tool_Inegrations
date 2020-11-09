@@ -37,12 +37,10 @@ import java.util.List;
 public class FileService {
 
     private final FileRepository fileRepository;
-    private final ToolService toolService;
 
     @Autowired
-    public FileService(FileRepository fileRepository, ToolService toolService) {
+    public FileService(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
-        this.toolService = toolService;
     }
 
     // 保存文件块

@@ -17,9 +17,9 @@ import java.util.Optional;
 @Repository
 public interface FileRepository extends JpaRepository<FileEntity, String> {
 
-    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
+    //@Lock(value = LockModeType.PESSIMISTIC_WRITE)
     boolean existsByMD5(String md5);
 
-    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
+    //@Lock(value = LockModeType.PESSIMISTIC_WRITE)
     Optional<FileEntity> findByMD5(String md5);
 }

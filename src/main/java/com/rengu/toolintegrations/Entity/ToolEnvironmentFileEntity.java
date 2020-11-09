@@ -12,27 +12,27 @@ import java.util.UUID;
 
 /**
  * Author: Zhangqiankun
- * Date: 2020/8/25 16:36
+ * Date: 2020/8/31 14:26
+ * 工具环境文件类
  */
-@Data
-@Entity
-public class ToolFileEntity implements Serializable {
 
+@Entity
+@Data
+public class ToolEnvironmentFileEntity implements Serializable {
     @Id
-    private String id = UUID.randomUUID().toString();
+    private String id= UUID.randomUUID().toString();
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime = new Date();
     private String name;
     private String extension;          //后缀
     private boolean isFolder;          //是否为文件夹
-
     private String type;            //文件类型
     private String version;         //文件属于哪个版本
 
     @ManyToOne
-    private FileEntity fileEntity;                 //文件
+    private FileEntity fileEntity;                  //文件
     @ManyToOne
-    private ToolFileEntity parentNode;             //父类节点(文件夹)
+    private ToolEnvironmentFileEntity parentNode;             //父类节点(文件夹)
     @ManyToOne
-    private ToolEntity toolEntity;                  //工具类
+    private ToolEntity toolEntity;//工具
 }
