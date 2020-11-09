@@ -24,11 +24,11 @@ public interface ToolFileRepository extends JpaRepository<ToolFileEntity, String
 
     List<ToolFileEntity> findByParentNodeAndToolEntity(ToolFileEntity parentNode, ToolEntity toolEntity);
 
-    @Query(value = "SELECT t2.* from tool_entity t1 INNER JOIN tool_file_entity t2 ON (t1.id = t2.tool_entity_id) WHERE (?1 is null or t1.id = ?1)",countQuery = "SELECT t2.* from tool_entity t1 INNER JOIN tool_file_entity t2 ON (t1.id = t2.tool_entity_id) WHERE (?1 is null or t1.id = ?1)",nativeQuery = true)
-    List<ToolFileEntity> findByToolId(String toolId,Pageable pageable);
+    @Query(value = "SELECT t2.* from tool_entity t1 INNER JOIN tool_file_entity t2 ON (t1.id = t2.tool_entity_id) WHERE (?1 is null or t1.id = ?1)", countQuery = "SELECT t2.* from tool_entity t1 INNER JOIN tool_file_entity t2 ON (t1.id = t2.tool_entity_id) WHERE (?1 is null or t1.id = ?1)", nativeQuery = true)
+    List<ToolFileEntity> findByToolId(String toolId, Pageable pageable);
 
-    @Query(value = "SELECT t2.* FROM user_entity u1 INNER JOIN tool_entity t1 on u1.id = t1.user_entity_id INNER JOIN tool_file_entity t2 ON t1.id = t2.tool_entity_id WHERE u1.id = ?1 order by t2.create_time desc ",countQuery = "SELECT t2.* FROM user_entity u1 INNER JOIN tool_entity t1 on u1.id = t1.user_entity_id INNER JOIN tool_file_entity t2 ON t1.id = t2.tool_entity_id WHERE u1.id = ?1 order by t2.create_time desc",nativeQuery = true)
-    List<ToolFileEntity> findByUserId(String userId);
+//    @Query(value = "SELECT t2.* FROM user_entity u1 INNER JOIN tool_entity t1 on u1.id = t1.user_entity_id INNER JOIN tool_file_entity t2 ON t1.id = t2.tool_entity_id WHERE u1.id = ?1 order by t2.create_time desc ", countQuery = "SELECT t2.* FROM user_entity u1 INNER JOIN tool_entity t1 on u1.id = t1.user_entity_id INNER JOIN tool_file_entity t2 ON t1.id = t2.tool_entity_id WHERE u1.id = ?1 order by t2.create_time desc", nativeQuery = true)
+//    List<ToolFileEntity> findByUserId(String userId);
 
     boolean existsByFileEntity(FileEntity fileEntity);
 }

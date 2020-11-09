@@ -60,6 +60,7 @@ public class ApplicationMessages {
 
     // 工具文件相关提示信息
     public static final String TOOL_FILE_ID_NOT_FOUND = "未发现该工具文件Id：";
+    public static final String TOOL_FILE_NAME_ARGS_NOT_FOUND = "未发现该工具文件名称：";
 
     //工作流工具成果消息提示
     public static final String WORKFLOW_NAME_NOT_NULL = "工作流名称不可为空";

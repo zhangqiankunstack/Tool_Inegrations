@@ -30,6 +30,7 @@ public class UserEntity implements UserDetails, Serializable {
     private String username;
     private String password;
     private String realName;                       // 姓名
+    private String downloadRights;                 //工具下载权限
     private boolean accountNonExpired = true;       //是否过期
     private boolean accountNonLocked = true;        //不被锁
     private boolean credentialsNonExpired = true;   //授权是否过期

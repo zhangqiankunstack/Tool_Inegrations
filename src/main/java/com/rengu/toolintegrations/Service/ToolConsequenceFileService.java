@@ -93,6 +93,10 @@ public class ToolConsequenceFileService {
         return toolConsequenceFileRepository.existsByFileEntity(fileEntity);
     }
 
+    //根据成果父节点创建文件夹
+
+
+
     // 根据组件父节点保存文件
     public List<ToolConsequenceFileEntity> saveToolFilesByParentNodeAndTool(String toolConsequenceName, String userId, String parentNodeId, List<FileMetaEntity> fileMetaEntityList) {
         ToolConsequenceEntity toolConsequenceAgrs = new ToolConsequenceEntity();

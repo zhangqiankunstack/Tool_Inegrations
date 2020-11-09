@@ -34,4 +34,9 @@ public interface ToolRepository extends JpaRepository<ToolEntity, String> {
     List<ToolEntity> findAllByDeleted(boolean deleted, Sort sort);
 
     List<ToolEntity> getToolByUserEntity(UserEntity userEntity);
+
+    Integer countByUserEntity_Id(String userId);
+
+    @Query(value = "SELECT DISTINCT type FROM tool_entity",nativeQuery = true)
+    List<String> findDistinctByType();
 }

@@ -8,6 +8,7 @@ import com.rengu.toolintegrations.Utils.CompressUtils;
 import com.rengu.toolintegrations.Utils.FormatUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.omg.CORBA.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -54,9 +55,10 @@ public class ToolFileService {
 //        return toolFileRepository.findBytoolTypeAndByFileNameAndByUserId(toolType, fileName, userId, pageable);
 //    }
 
-    public List<ToolFileEntity> getToolAllByUser(String userId) {
-        return toolFileRepository.findByUserId(userId);
-    }
+    //todo 查询工具数量，暂时不用
+//    public List<ToolFileEntity> getToolAllByUser(String userId) {
+//        return toolFileRepository.findByUserId(userId);
+//    }
 
     //根据工具删除工具文件
     public List<ToolFileEntity> cleanToolFileByToolEntity(ToolEntity toolEntity) throws IOException {
@@ -89,6 +91,46 @@ public class ToolFileService {
         ToolFileEntity toolFileEntity = getToolFileById(toolId);
         deleteToolFile(toolFileEntity);
         return toolFileEntity;
+    }
+
+    // 根据组件父节点创建文件夹
+    public void saveToolFileByTool(ToolEntity toolEntity, String parentNodeId) {
+        ToolFileEntity parentNode = hasToolFileById(parentNodeId) ? getToolFileById(parentNodeId) : null;
+        String types = "执行程序,依赖环境,文档资料,安装程序";
+        String[] type = types.split(",");
+        for (int i = 0; i < type.length; i++) {
+            ToolFileEntity toolFileEntity = new ToolFileEntity();
+            toolFileEntity.setName(type[i]);
+            toolFileEntity.setExtension("?");
+            toolFileEntity.setFolder(true);
+            toolFileEntity.setParentNode(parentNode);
+            toolFileEntity.setToolEntity(toolEntity);
+            toolFileRepository.save(toolFileEntity);
+        }
+    }
+
+    //根据成果文件父节点创建文件夹
+    public ToolFileEntity saveToolFileByParentNodeAndTool(ToolEntity toolEntity, String parentNodeId, ToolFileEntity toolFileEntity) {
+        ToolFileEntity parentNode = hasToolFileById(parentNodeId) ? getToolFileById(parentNodeId) : null;
+        if (StringUtils.isEmpty(toolFileEntity.getName())) {
+            throw new RuntimeException(ApplicationMessages.TOOL_FILE_NAME_ARGS_NOT_FOUND);
+        }
+        toolFileEntity.setName(getName(toolFileEntity.getName(), toolFileEntity.getExtension(), parentNode, toolEntity));
+        toolFileEntity.setExtension("?");
+        toolFileEntity.setFolder(true);
+        toolFileEntity.setParentNode(parentNode);
+        toolFileEntity.setToolEntity(toolEntity);
+        return toolFileRepository.save(toolFileEntity);
+    }
+
+    //获取不重复的文件/文件夹名
+    public String getName(String name, String extension, ToolFileEntity parentNode, ToolEntity toolEntity) {
+        int index = 0;
+        while (hasToolFileByNameAndExtensionAndParentNodeAndTool(name, extension, parentNode, toolEntity)) {
+            index = index + 1;
+            name = name + "(" + index + ")";
+        }
+        return name;
     }
 
     // 根据组件父节点保存文件
@@ -148,15 +190,15 @@ public class ToolFileService {
     //导出工具文件以及环境文件
     public File exportToolFileByTool(ToolEntity toolEntity, UserEntity userEntity) throws IOException {
         //todo:初始化导出目录
-        File exportPath = new File(FileUtils.getTempDirectoryPath() + File.separator+toolEntity.getName());
+        File exportPath = new File(FileUtils.getTempDirectoryPath() + File.separator + toolEntity.getName());
         exportPath.mkdirs();
         //导出工具文件
         for (ToolFileEntity toolFileEntity : getToolFilesByParentNodeAndTool(null, toolEntity)) {
             exportToolFile(toolFileEntity, exportPath);
         }
         //导出环境文件
-        for(ToolEnvironmentFileEntity toolEnvironmentFileEntity:toolEnvironmentFileService.getToolEnvironmentFilesByParentNodeAndToolEntity(null,toolEntity)){
-            toolEnvironmentFileService.exportEnvironmentFile(toolEnvironmentFileEntity,exportPath);
+        for (ToolEnvironmentFileEntity toolEnvironmentFileEntity : toolEnvironmentFileService.getToolEnvironmentFilesByParentNodeAndToolEntity(null, toolEntity)) {
+            toolEnvironmentFileService.exportEnvironmentFile(toolEnvironmentFileEntity, exportPath);
         }
         String username = userEntity.getUsername();
         String description = "用户：" + username + "导出工具：" + toolEntity.getName();
@@ -185,7 +227,7 @@ public class ToolFileService {
         return exportPath;
     }
 
-    // 根据名称、父节点及组件检查文件是否存在
+    //根据名称、父节点及组件检查文件是否存在
     public boolean hasToolFileByNameAndExtensionAndParentNodeAndTool(String name, String extension, ToolFileEntity parentNode, ToolEntity toolEntity) {
         if (StringUtils.isEmpty(name) || StringUtils.isEmpty(extension)) {
             return false;
@@ -268,10 +310,11 @@ public class ToolFileService {
     public boolean hasToolFileByFile(FileEntity fileEntity) {
         return toolFileRepository.existsByFileEntity(fileEntity);
     }
+
     //导出工具文件
     public File exportToolFileByToolEntity(ToolEntity toolEntity, UserEntity userEntity) throws IOException {
         //todo:初始化导出目录
-        File exportPath = new File(FileUtils.getTempDirectoryPath() + File.separator+toolEntity.getName());
+        File exportPath = new File(FileUtils.getTempDirectoryPath() + File.separator + toolEntity.getName());
         exportPath.mkdirs();
         //导出工具文件
         for (ToolFileEntity toolFileEntity : getToolFilesByParentNodeAndTool(null, toolEntity)) {

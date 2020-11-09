@@ -50,6 +50,10 @@ public class ToolController {
         return ResultUtils.build(toolService.saveTool(userService.getUserById(userId), toolArge));
     }
 
+    //通过用户id查询工具数量
+
+
+
     //根据id查询工具信息
     @ApiOperation("根据id查询信息")
     @GetMapping(value = "/{toolId}/getToolEntity")
@@ -83,6 +87,13 @@ public class ToolController {
     @PatchMapping(value = "/{toolId}")
     public ResultEntity updateToolById(@PathVariable(value = "toolId") String toolId, @RequestBody ToolEntity toolAgrs) {
         return ResultUtils.build(toolService.updateToolById(toolId, toolAgrs));
+    }
+
+    //根据id和父节点ID创建文件夹
+    @ApiOperation("根据id和父节点ID创建文件夹")
+    @PostMapping(value = "/{toolId}/createFolder")
+    public ResultEntity saveToolFileByParentNodeAndTool(@PathVariable(value = "toolId") String toolId, @RequestHeader(value = "parentNodeId", required = false, defaultValue = "") String parentNodeId,@RequestBody ToolFileEntity toolFileEntity) {
+        return ResultUtils.build(toolFileService.saveToolFileByParentNodeAndTool(toolService.getToolById(toolId), parentNodeId, toolFileEntity));
     }
 
     // 根据id和父节点Id创建文件
@@ -160,4 +171,19 @@ public class ToolController {
         IOUtils.copy(new FileInputStream(exportFile), httpServletResponse.getOutputStream());
         httpServletResponse.flushBuffer();
     }
+
+    //通过用户id查询工具数量
+    @ApiOperation("根据id导出所有的工具文件")
+    @GetMapping(value = "/findToolCount/{userId}")
+    public ResultEntity findToolCount(@PathVariable(value = "userId") String userId){
+        return ResultUtils.build(toolService.findToolCount(userId));
+    }
+
+    //工具管理，下拉框选择
+    @ApiOperation("工具管理，下拉框选择")
+    @GetMapping(value = "/findToolByType")
+    public ResultEntity findToolByType(){
+        return ResultUtils.build(toolService.findToolByType());
+    }
+
 }
